@@ -1,0 +1,1 @@
+{"name":"samra-gym-management","version":"1.0.0","description":"Gym Membership Management System by Samra","main":"server.js","scripts":{"start":"node server.js"},"dependencies":{"express":"^5.1.0","mysql2":"^3.14.1"}}

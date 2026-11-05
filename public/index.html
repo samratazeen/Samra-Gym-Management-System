@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Samra | Gym Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <aside>
+        <div class="brand"><b>S</b>
+            <div><strong>FORM / FITNESS</strong><small>MEMBERSHIP MANAGEMENT</small></div>
+        </div>
+        <p class="muted">WORKSPACE</p>
+        <nav><button class="active" data-page="dashboard">▦　Dashboard</button><button
+                data-page="members">♙　Members</button><button data-page="plans">◇　Membership plans</button><button
+                data-page="subscriptions">▤　Subscriptions</button><button
+                data-page="trainers">♧　Trainers</button><button data-page="assignments">↗　Trainer assignments</button>
+        </nav>
+        <div class="credit">PROJECT CREATOR<br><b>SAMRA</b><small>Designed & developed by Samra</small></div>
+    </aside>
+    <main>
+        <header>
+            <div><small></small>
+                <h1 id="heading"> Overview</h1>
+            </div><b class="user">S</b>
+        </header>
+        <section id="dashboard" class="page show">
+            <div class="hero"><small>WELCOME TO YOUR WORKSPACE</small>
+                <h2>Stronger systems.<br><i>Stronger results.</i></h2>
+                <p>Keep your members, plans and memberships in one calm, clear place.</p>
+                <div class="hero-sign">CREATED BY<strong>SAMRA</strong></div>
+            </div>
+            <div class="section-title">
+                <div><small>AT A GLANCE</small>
+                    <h2>Business overview</h2>
+                </div><button class="dark" onclick="go('members')">＋ Add a member</button>
+            </div>
+            <div class="stats">
+                <article><span>Total members</span><b id="sm">0</b><small>Registered members</small></article>
+                <article><span>Active members</span><b id="sa">0</b><small>Member status active</small></article>
+                <article><span>Membership plans</span><b id="sp">0</b><small>Available plans</small></article>
+                <article><span>Current subscriptions</span><b id="ss">0</b><small>Not yet expired</small></article>
+            </div>
+            <div class="note"><small>YOUR WORKFLOW</small>
+                <h3>Everything in its place.</h3>
+                <p>Add a member, create a plan, enroll the member and assign a trainer. Subscription expiry dates are
+                    calculated automatically.</p>
+            </div>
+        </section>
+        <section id="members" class="page">
+            <div class="section-title">
+                <div><small>MEMBER DIRECTORY</small>
+                    <h2>Members</h2>
+                </div>
+            </div>
+            <form id="mf" class="panel">
+                <h3 id="mt">Add a new member</h3><input type="hidden" id="mid"><label>Full name<input id="mn"
+                        required></label><label>Email<input id="me" type="email" required></label><label>Phone<input
+                        id="mp"></label><label>Join date<input id="md" type="date" required></label><label>Status<select
+                        id="ms">
+                        <option>Active</option>
+                        <option>Inactive</option>
+                    </select></label><button class="dark">Save member</button><button type="button" class="light"
+                    onclick="mf.reset();mid.value='';mt.textContent='Add a new member'">Clear</button>
+            </form>
+            <div class="panel">
+                <h3>All members</h3><input id="search" placeholder="Search members..." oninput="renderMembers()">
+                <div class="tablebox">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Join date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mb"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section id="plans" class="page">
+            <div class="section-title">
+                <div><small>PRICING & ACCESS</small>
+                    <h2>Membership plans</h2>
+                </div>
+            </div>
+            <form id="pf" class="panel">
+                <h3 id="pt">Create a membership plan</h3><input type="hidden" id="pid"><label>Plan name<input id="pn"
+                        required></label><label>Duration (months)<input id="pd" type="number" min="1"
+                        required></label><label>Fee (₹)<input id="pfee" type="number" min="0" step=".01"
+                        required></label><label>Description<textarea id="pdesc"></textarea></label><button
+                    class="dark">Save plan</button><button type="button" class="light"
+                    onclick="pf.reset();pid.value='';pt.textContent='Create a membership plan'">Clear</button>
+            </form>
+            <div id="planlist" class="cards"></div>
+        </section>
+        <section id="subscriptions" class="page">
+            <div class="section-title">
+                <div><small>MEMBERSHIP RECORDS</small>
+                    <h2>Subscriptions</h2>
+                </div>
+            </div>
+            <form id="sf" class="panel">
+                <h3>Enroll a member in a plan</h3><label>Member<select id="smem"
+                        required></select></label><label>Plan<select id="splan" required></select></label><label>Start
+                    date<input id="sdate" type="date" required></label><label>Payment status<select id="pay">
+                        <option>Pending</option>
+                        <option>Paid</option>
+                        <option>Partially Paid</option>
+                    </select></label><button class="dark">Create subscription</button>
+                <p class="hint">Expiry date is calculated automatically from plan duration.</p>
+            </form>
+            <div class="panel">
+                <h3>Subscription history</h3>
+                <div class="tablebox">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Member</th>
+                                <th>Plan</th>
+                                <th>Start</th>
+                                <th>Expiry</th>
+                                <th>Payment</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sb"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section id="trainers" class="page">
+            <div class="section-title">
+                <div><small>PEOPLE & EXPERTISE</small>
+                    <h2>Trainers</h2>
+                </div>
+            </div>
+            <form id="tf" class="panel">
+                <h3>Add a trainer</h3><label>Trainer name<input id="tn" required></label><label>Specialization<input
+                        id="ts"></label><label>Phone<input id="tp"></label><label>Email<input id="te"
+                        type="email"></label><button class="dark">Save trainer</button>
+            </form>
+            <div class="panel">
+                <h3>Trainer directory</h3>
+                <div class="tablebox">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Specialization</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tb"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section id="assignments" class="page">
+            <div class="section-title">
+                <div><small>PERSONAL COACHING</small>
+                    <h2>Trainer assignments</h2>
+                </div>
+            </div>
+            <form id="af" class="panel">
+                <h3>Assign trainer to member</h3><label>Member<select id="am"
+                        required></select></label><label>Trainer<select id="at" required></select></label><button
+                    class="dark">Save assignment</button>
+            </form>
+            <div class="panel">
+                <h3>Current assignments</h3>
+                <div class="tablebox">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Member</th>
+                                <th>Trainer</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ab"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <footer>GYM MEMBERSHIP MANAGEMENT SYSTEM　·　DESIGNED & DEVELOPED BY <b>SAMRA</b></footer>
+    </main>
+    <div id="toast"></div>
+    <script src="app.js"></script>
+</body>
+
+</html>
